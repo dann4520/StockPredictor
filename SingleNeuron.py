@@ -30,15 +30,33 @@ class neuron:
 
             print("Output: " + str(output) + " Target: " + str(target))
 
+            # If output is too low add .25 of input to weights
             if output < target:
                 self.weight += .25*inputdata
 
+            # If output is too high subtract .25 of input to weights
             if output > target:
                 self.weight -= .25*inputdata
 
             print(self.weight)
 
-    # Activation Function accepts input and returns output
+    # Tests neural network
+    def testNetwork(self, testingdata):
+
+        for x in testingdata:
+            input1 = x[0]
+            input2 = x[1]
+
+            # Create input array using numpy
+            inputdata = numpy.array([input1, input2]).T
+
+            # Calculate net inputs using numpy dot method and pass to activation function
+            netInputs = numpy.dot(self.weight, inputdata)
+            output = self.activationFunction(netInputs[0])
+
+            print("Input: " + str(input1) + " " + str(input2) + " Output: " + str(output))
+
+    # Activation Function uses hard limit to convert input to output
     def activationFunction(self, netInput):
         if netInput >= .75:
             return 1

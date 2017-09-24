@@ -41,6 +41,11 @@ def main():
 
     a = SingleNeuron.neuron(1, 2)
     a.printWeight()
+
+    print("***Begin Training***")
     a.trainNewtwork(trainingData)
-    a.printWeight()
+
+    print("***Begin Testing***")
+    a.testNetwork(testingData)
+
 main()
