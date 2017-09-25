@@ -1,7 +1,9 @@
-import SingleNeuron
+import neuron
 
 # Array of tuples used for training neural network
-trainingData = [(0, 0, 0),
+# Format is (Input1, Input2, TargetOutput)
+training_data = [
+                (0, 0, 0),
                 (0, 1, 0),
                 (1, 0, 0),
                 (1, 0, 0),
@@ -29,23 +31,35 @@ trainingData = [(0, 0, 0),
                 (0, 1, 0),
                 (1, 0, 0),
                 (1, 0, 0),
-                (1, 1, 1)]
+                (1, 1, 1)
+]
 
 # Array of tuples used for testing neural network
-testingData = [(0, 0),
+# Format is (Input1, Input2)
+testing_data = [
+               (0, 0),
                (0, 1),
                (1, 0),
-               (1, 1)]
+               (1, 1)
+]
+
 
 def main():
 
-    a = SingleNeuron.neuron(1, 2)
+
+    a = neuron.Neuron(1, 2)
     a.printWeight()
 
-    print("***Begin Training***")
-    a.trainNewtwork(trainingData)
-
+    # Begin Initial Testing
     print("***Begin Testing***")
-    a.testNetwork(testingData)
+    a.testNetwork(testing_data)
+
+    # Begin Training of Netork
+    print("***Begin Training***")
+    a.trainNewtwork(training_data)
+
+    # Final Testing
+    print("***Begin Testing***")
+    a.testNetwork(testing_data)
 
 main()

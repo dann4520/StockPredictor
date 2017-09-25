@@ -1,6 +1,8 @@
 import numpy
 
-class neuron:
+
+class Neuron:
+
 
     # initialize neuron
     def __init__(self, rows, columns):
