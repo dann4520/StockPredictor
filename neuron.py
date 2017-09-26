@@ -4,7 +4,7 @@ import numpy
 class Neuron:
 
 
-    # initialize neuron
+    # initialize neuron with random weights
     def __init__(self, rows, columns):
         self.weight = numpy.random.rand(rows, columns)
 
@@ -18,6 +18,8 @@ class Neuron:
 
     # Trains neural network using training data passed in as list of tuples
     def trainNewtwork(self, trainingData):
+
+        # Iterate through training data
         for x in trainingData:
             input1 = x[0]
             input2 = x[1]
@@ -42,9 +44,10 @@ class Neuron:
 
             print(self.weight)
 
-    # Tests neural network
+    # Tests neural network using testing data passed in a list of tuples
     def testNetwork(self, testingdata):
 
+        # Iterate through testing data
         for x in testingdata:
             input1 = x[0]
             input2 = x[1]
@@ -58,7 +61,7 @@ class Neuron:
 
             print("Input: " + str(input1) + " " + str(input2) + " Output: " + str(output))
 
-    # Activation Function uses hard limit to convert input to output
+    # Activation Function uses hard limit to convert input to output.
     def activationFunction(self, netInput):
         if netInput >= .75:
             return 1
