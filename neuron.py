@@ -1,6 +1,8 @@
 import numpy
 
-
+"""
+Neuron class is a simple, single neuron, neural network.
+"""
 class Neuron:
 
 
