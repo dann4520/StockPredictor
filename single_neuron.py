@@ -1,10 +1,9 @@
 import numpy
 
 """
-Neuron class is a simple, single neuron, neural network.
+SingleNeuron class is a simple, single neuron, neural network.
 """
-class Neuron:
-
+class SingleNeuron:
 
     # initialize neuron with random weights
     def __init__(self, rows, columns):

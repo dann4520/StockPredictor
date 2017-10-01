@@ -1,4 +1,4 @@
-import neuron
+import single_neuron
 
 # Array of tuples used for training neural network
 # Format is (Input1, Input2, TargetOutput)
@@ -47,7 +47,7 @@ testing_data = [
 def main():
 
 
-    a = neuron.Neuron(1, 2)
+    a = single_neuron.SingleNeuron(1, 2)
     a.printWeight()
 
     # Begin Initial Testing
