@@ -19,6 +19,7 @@ class NeuralNetwork:
         self.num_outputs = num_outputs
         self.num_layers = hidden_layers + NeuralNetwork.OUTSIDE_LAYERS
 
+        # This section fills the neural network with neurons.
         for row in range(len(self.neural_network_list)):
             for col in range(num_inputs):
                 if row >= (num_outputs) and col > num_outputs:
