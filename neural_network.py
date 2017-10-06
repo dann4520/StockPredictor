@@ -20,8 +20,8 @@ class NeuralNetwork:
         self.num_layers = hidden_layers + NeuralNetwork.OUTSIDE_LAYERS
 
         # This section fills the neural network with neurons.
-        for row in range(len(self.neural_network_list)):
-            for col in range(num_inputs):
+        for row in range(num_inputs):
+            for col in range(self.num_layers):
                 if row >= (num_outputs) and col > num_outputs:
                     pass
                 else:
