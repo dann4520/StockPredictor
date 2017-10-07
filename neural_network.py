@@ -2,11 +2,21 @@ import numpy
 import neuron
 
 """
-NeuralNetwork class 
+NeuralNetwork class receives number of inputs, number of hidden layers, and number of outputs
+and constructs a list of lists of neurons to act as a neural network.
+Example of basic 3 input, 1 hidden layer, 1 output network.
+[
+    [Neuron 1, Neuron 4, Neuron 7],
+    [Neuron 2, Neuron 5, Empty],
+    [Neuron 3, Neuron 6, Empty]
+]
+Neurons 1, 2, and 3 are in the input layer, 4, 5, and 6 in layer 2, and 7 is in the output layer
 """
+
+
 class NeuralNetwork:
 
-    # modifier to account for input and output layer. Added to hidden_layers.
+    # modifier to account for input and output layer. Added to hidden_layers to give total number of layers.
     OUTSIDE_LAYERS = 2
 
     # initialize neuron with random weights
@@ -20,14 +30,16 @@ class NeuralNetwork:
         self.num_layers = hidden_layers + NeuralNetwork.OUTSIDE_LAYERS
 
         # This section fills the neural network with neurons.
+        # Number of rows depends of number of inputs.
+        # Number of columns depends on number of layers.
         for row in range(num_inputs):
             for col in range(self.num_layers):
-                if row >= (num_outputs) and col > num_outputs:
-                    pass
+                if row >= num_outputs and col > num_outputs:
+                    pass # If in last row only create enough neurons to account for outputs
                 else:
-                    self.neural_network_list[row][col] = neuron.Neuron(self.num_layers)
+                    self.neural_network_list[row][col] = neuron.Neuron(self.num_inputs)
 
-    # creates a 2d list to act as the structure of the Neural Network. Neurons will be placed inside.
+    # Creates a 2d list to act as the structure of the Neural Network. Neurons will be placed inside.
     def createNetworkList(self, num_inputs, hidden_layers):
         network_list = []
         for i in range(num_inputs):
