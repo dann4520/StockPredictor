@@ -22,6 +22,9 @@ class NeuralNetwork:
     # initialize neuron with random weights
     def __init__(self, num_inputs, hidden_layers, num_outputs):
         self.neural_network_list = self.createNetworkList(num_inputs, hidden_layers)
+        self.neural_network_weights = []
+        self.neural_network_inputs = []
+        self.neural_network_outputs = []
 
         self.network_output = 0
         self.num_inputs = num_inputs
@@ -32,12 +35,23 @@ class NeuralNetwork:
         # This section fills the neural network with neurons.
         # Number of rows depends of number of inputs.
         # Number of columns depends on number of layers.
-        for row in range(num_inputs):
+        for row in range(self.num_inputs):
             for col in range(self.num_layers):
                 if row >= num_outputs and col > num_outputs:
                     pass # If in last row only create enough neurons to account for outputs
                 else:
                     self.neural_network_list[row][col] = neuron.Neuron(self.num_inputs)
+
+        # This section initializes the weight matrix's for the neural network
+        for col in range(self.num_layers):
+            if col < self.num_layers - 1:
+                self.neural_network_weights.append(numpy.random.rand(self.num_inputs, self.num_layers))
+                self.neural_network_inputs.append(numpy.zeros((self.num_inputs, 1)))
+                self.neural_network_outputs.append(numpy.zeros((self.num_inputs, 1)))
+            else:
+                self.neural_network_weights.append(numpy.random.rand(self.num_outputs, self.num_layers))
+                self.neural_network_inputs.append(numpy.zeros((self.num_inputs, 1)))
+                self.neural_network_outputs.append(numpy.zeros((1, 1)))
 
     # Creates a 2d list to act as the structure of the Neural Network. Neurons will be placed inside.
     def createNetworkList(self, num_inputs, hidden_layers):
@@ -48,3 +62,15 @@ class NeuralNetwork:
                 x.append(0)
             network_list.append(x)
         return network_list
+
+    # Displays neural network structure
+    def displayNeuralNetwork(self):
+        for i in self.neural_network_list:
+            print i
+
+    # Using training data to train network
+    def trainNetwork(self):
+        pass
+
+
+
