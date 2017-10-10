@@ -24,6 +24,7 @@ class NeuralNetwork:
         self.neural_network_list = self.createNetworkList(num_inputs, hidden_layers)
         self.neural_network_weights = []
         self.neural_network_inputs = []
+        self.neural_network_net_inputs = []
         self.neural_network_outputs = []
 
         self.network_output = 0
@@ -47,10 +48,12 @@ class NeuralNetwork:
             if col < self.num_layers - 1:
                 self.neural_network_weights.append(numpy.random.rand(self.num_inputs, self.num_layers))
                 self.neural_network_inputs.append(numpy.zeros((self.num_inputs, 1)))
+                self.neural_network_net_inputs.append(numpy.zeros((self.num_inputs, 1)))
                 self.neural_network_outputs.append(numpy.zeros((self.num_inputs, 1)))
             else:
                 self.neural_network_weights.append(numpy.random.rand(self.num_outputs, self.num_layers))
                 self.neural_network_inputs.append(numpy.zeros((self.num_inputs, 1)))
+                self.neural_network_net_inputs.append(numpy.zeros((1, 1)))
                 self.neural_network_outputs.append(numpy.zeros((1, 1)))
 
     # Creates a 2d list to act as the structure of the Neural Network. Neurons will be placed inside.
