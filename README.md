@@ -3,11 +3,13 @@ Daniel Wood
 dlwood5@cougars.ccis.edu
 
 Overview
+
 I plan to create a Neural Network that can predict the future returns of securities
 based on past data.  This will be validated using backtesting on past data not used
 in the training of the Neural Network.
 
 Background
+
 Efficient Market Hypothesis tells us that we cannot predict future security prices
 because all currently available information is already priced into the security.
 Only new information can affect future security prices.  I hope to prove this wrong
@@ -15,6 +17,7 @@ by creating a Neural Network which can successfully predict the future price of 
 security within a reasonable level of accuracy.
 
 Technical Analysis
+
 Technical Analysis focuses on price and volume, ignores fundamentals such as company
 earnings or company balance sheet. Looks for trends in past trade price and volume to
 make predictions about the future price. A Neural Network will be fed past price and
