@@ -12,75 +12,32 @@ a.neural_network_inputs[0][2] = .88
 #a.neural_network_inputs[0][5] = -5
 #a.neural_network_inputs[0][6] = -5
 
-x = 1
-for i in a.neural_network_weights:
-    print "Weight Layer " + str(x)
-    print i
-    x += 1
+a.displayInputs()
 
-x = 1
-for i in a.neural_network_inputs:
-    print "Input Layer " + str(x)
-    print i
-    x += 1
+a.displayNetInputs()
 
-x = 1
-for i in a.neural_network_net_inputs:
-    print "Net Input Layer " + str(x)
-    print i
-    x += 1
-
-x = 1
-for i in a.neural_network_outputs:
-    print "Output Layer " + str(x)
-    print i
-    x += 1
+a.displayOutputs()
 
 a.importWeights()
 a.neural_network_net_inputs[0] = numpy.dot(a.neural_network_weights[0], a.neural_network_inputs[0])
 
-x = 1
-for i in a.neural_network_net_inputs:
-    print "Net Input Layer " + str(x)
-    print i
-    x += 1
+a.displayNetInputs()
 
-x = 1
-for i in a.neural_network_outputs:
-    print "Output Layer " + str(x)
-    print i
-    x += 1
+a.displayOutputs()
 
 for x in range(len(a.neural_network_outputs[0])):
     a.neural_network_outputs[0][x] = 1/ (1 + math.e**-a.neural_network_net_inputs[0][x])
 
 # [0] = 1/ (1 + math.e**-a.neural_network_outputs[0][0])
 
-x = 1
-for i in a.neural_network_net_inputs:
-    print "Net Input Layer " + str(x)
-    print i
-    x += 1
+a.displayNetInputs()
 
-x = 1
-for i in a.neural_network_outputs:
-    print "Output Layer " + str(x)
-    print i
-    x += 1
+a.displayOutputs()
 
-x = 1
-for i in a.neural_network_weights:
-    print "Weight Layer " + str(x)
-    print i
-    x += 1
+a.displayWeights()
 
 a.randomizeWeights()
 
-x = 1
-for i in a.neural_network_weights:
-    print "Weight Layer " + str(x)
-    print i
-    x += 1
-
+a.displayWeights()
 
 a.exportWeights()

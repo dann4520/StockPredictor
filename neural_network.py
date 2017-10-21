@@ -98,3 +98,35 @@ class NeuralNetwork:
                 for n in x:
                     for i in range(len(n)):
                         writer_object.writerow([n[i]])
+
+    # Displays network weights
+    def displayWeights(self):
+        x = 1
+        for i in self.neural_network_weights:
+            print "Weight Layer " + str(x)
+            print i
+            x += 1
+
+    # Displays network inputs
+    def displayInputs(self):
+        x = 1
+        for i in self.neural_network_inputs:
+            print "Input Layer " + str(x)
+            print i
+            x += 1
+
+    # Displays network net inputs
+    def displayNetInputs(self):
+        x = 1
+        for i in self.neural_network_net_inputs:
+            print "Net Input Layer " + str(x)
+            print i
+            x += 1
+
+    # Displays network outputs
+    def displayOutputs(self):
+        x = 1
+        for i in self.neural_network_outputs:
+            print "Output Layer " + str(x)
+            print i
+            x += 1
