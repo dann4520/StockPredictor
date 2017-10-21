@@ -2,7 +2,7 @@ import neural_network
 import numpy
 import math
 
-a = neural_network.NeuralNetwork(3, 1, 1)
+a = neural_network.NeuralNetwork(7, 1, 1)
 
 a.neural_network_inputs[0][0] = .76
 a.neural_network_inputs[0][1] = .1
@@ -36,6 +36,7 @@ for i in a.neural_network_outputs:
     print i
     x += 1
 
+a.importWeights()
 a.neural_network_net_inputs[0] = numpy.dot(a.neural_network_weights[0], a.neural_network_inputs[0])
 
 x = 1
@@ -67,3 +68,19 @@ for i in a.neural_network_outputs:
     print i
     x += 1
 
+x = 1
+for i in a.neural_network_weights:
+    print "Weight Layer " + str(x)
+    print i
+    x += 1
+
+a.randomizeWeights()
+
+x = 1
+for i in a.neural_network_weights:
+    print "Weight Layer " + str(x)
+    print i
+    x += 1
+
+
+a.exportWeights()

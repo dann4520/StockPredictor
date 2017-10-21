@@ -1,5 +1,5 @@
 import numpy
-
+import csv
 
 """
 NeuralNetwork class receives number of inputs, number of hidden layers, and number of outputs
@@ -18,6 +18,7 @@ class NeuralNetwork:
 
     # modifier to account for input and output layer. Added to hidden_layers to give total number of layers.
     OUTSIDE_LAYERS = 2
+    WEIGHTS_FILE = "AAPLWeights.csv"
 
     # initialize neuron with random weights
     def __init__(self, num_inputs, hidden_layers, num_outputs):
@@ -36,12 +37,14 @@ class NeuralNetwork:
         # This section initializes the weight matrix's for the neural network
         for col in range(self.num_layers):
             if col < self.num_layers - 1:
-                self.neural_network_weights.append(numpy.random.rand(self.num_inputs, self.num_inputs))
+                #self.neural_network_weights.append(numpy.random.rand(self.num_inputs, self.num_inputs))
+                self.neural_network_weights.append(numpy.zeros((self.num_inputs, self.num_inputs)))
                 self.neural_network_inputs.append(numpy.zeros((self.num_inputs, 1)))
                 self.neural_network_net_inputs.append(numpy.zeros((self.num_inputs, 1)))
                 self.neural_network_outputs.append(numpy.zeros((self.num_inputs, 1)))
             else:
-                self.neural_network_weights.append(numpy.random.rand(self.num_outputs, self.num_outputs))
+                #self.neural_network_weights.append(numpy.random.rand(self.num_outputs, self.num_outputs))
+                self.neural_network_weights.append(numpy.zeros((self.num_outputs, self.num_inputs)))
                 self.neural_network_inputs.append(numpy.zeros((self.num_inputs, 1)))
                 self.neural_network_net_inputs.append(numpy.zeros((1, 1)))
                 self.neural_network_outputs.append(numpy.zeros((1, 1)))
@@ -65,5 +68,33 @@ class NeuralNetwork:
     def trainNetwork(self):
         pass
 
+    # Randomizes the weights
+    def randomizeWeights(self):
+        for x in self.neural_network_weights:
+            for n in x:
+                for i in range(len(n)):
+                    n[i] = numpy.random.random_sample()
 
+    # Imports the Weights from a CSV file specified as global variable
+    def importWeights(self):
+        weights_input = []
+        with open(self.WEIGHTS_FILE, 'rb') as csvfile:
+            reader_object = csv.reader(csvfile, delimiter=',', quotechar='/')
+            for row in reader_object:
+                weights_input.append(row[0])
 
+        current_input = 0
+        for x in self.neural_network_weights:
+            for n in x:
+                for i in range(len(n)):
+                    n[i] = weights_input[current_input]
+                    current_input += 1
+
+    # Exports the Weights to a CSV file specified as global variable
+    def exportWeights(self):
+        with open(self.WEIGHTS_FILE, 'wb') as csvfile:
+            writer_object = csv.writer(csvfile, delimiter=',', quotechar='/', quoting=csv.QUOTE_MINIMAL)
+            for x in self.neural_network_weights:
+                for n in x:
+                    for i in range(len(n)):
+                        writer_object.writerow([n[i]])
