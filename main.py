@@ -3,12 +3,14 @@ import numpy
 import math
 
 a = neural_network.NeuralNetwork(3, 1, 1)
-#a.displayNeuralNetwork()
-
 
 a.neural_network_inputs[0][0] = .76
-a.neural_network_inputs[0][1] = 2
-a.neural_network_inputs[0][2] = -5
+a.neural_network_inputs[0][1] = .1
+a.neural_network_inputs[0][2] = .88
+#a.neural_network_inputs[0][3] = .76
+#a.neural_network_inputs[0][4] = 2
+#a.neural_network_inputs[0][5] = -5
+#a.neural_network_inputs[0][6] = -5
 
 x = 1
 for i in a.neural_network_weights:

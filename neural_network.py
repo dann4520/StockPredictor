@@ -1,5 +1,5 @@
 import numpy
-import neuron
+
 
 """
 NeuralNetwork class receives number of inputs, number of hidden layers, and number of outputs
@@ -33,25 +33,15 @@ class NeuralNetwork:
         self.num_outputs = num_outputs
         self.num_layers = hidden_layers + NeuralNetwork.OUTSIDE_LAYERS
 
-        # This section fills the neural network with neurons.
-        # Number of rows depends of number of inputs.
-        # Number of columns depends on number of layers.
-        for row in range(self.num_inputs):
-            for col in range(self.num_layers):
-                if row >= num_outputs and col > num_outputs:
-                    pass # If in last row only create enough neurons to account for outputs
-                else:
-                    self.neural_network_list[row][col] = neuron.Neuron(self.num_inputs)
-
         # This section initializes the weight matrix's for the neural network
         for col in range(self.num_layers):
             if col < self.num_layers - 1:
-                self.neural_network_weights.append(numpy.random.rand(self.num_inputs, self.num_layers))
+                self.neural_network_weights.append(numpy.random.rand(self.num_inputs, self.num_inputs))
                 self.neural_network_inputs.append(numpy.zeros((self.num_inputs, 1)))
                 self.neural_network_net_inputs.append(numpy.zeros((self.num_inputs, 1)))
                 self.neural_network_outputs.append(numpy.zeros((self.num_inputs, 1)))
             else:
-                self.neural_network_weights.append(numpy.random.rand(self.num_outputs, self.num_layers))
+                self.neural_network_weights.append(numpy.random.rand(self.num_outputs, self.num_outputs))
                 self.neural_network_inputs.append(numpy.zeros((self.num_inputs, 1)))
                 self.neural_network_net_inputs.append(numpy.zeros((1, 1)))
                 self.neural_network_outputs.append(numpy.zeros((1, 1)))
