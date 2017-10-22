@@ -79,19 +79,20 @@ class NeuralNetwork:
                 target = row[self.num_inputs + 1]
 
                 for layer in range(self.num_layers):
-
+                    # If not final layer
                     if layer < self.num_layers - 1:
                         # Get net inputs by matrix multiplication of weight and input matrix
                         self.neural_network_net_inputs[layer] = numpy.dot(self.neural_network_weights[layer], self.neural_network_inputs[layer])
                         for val in range(len(self.neural_network_outputs[layer])):
                             self.neural_network_outputs[layer][val] = self.activationFunction(self.neural_network_net_inputs[layer][val])
                         self.neural_network_inputs[layer + 1] = self.neural_network_outputs[layer]
-
+                    # If final layer
                     else:
                         self.neural_network_net_inputs[layer] = numpy.dot(self.neural_network_weights[layer], self.neural_network_inputs[layer])
                         for val in range(len(self.neural_network_outputs[layer])):
                             self.neural_network_outputs[layer][val] = self.activationFunction(self.neural_network_net_inputs[layer][val])
 
+                # Calculate total error, hidden layer error, and first layer error
                 final_output = self.neural_network_outputs[self.num_layers - 1][0][0]
                 error = float(target) - final_output
                 hidden_error = numpy.dot(self.neural_network_weights[1].T, error)
@@ -99,7 +100,8 @@ class NeuralNetwork:
                 print ("Final Output: " + str(final_output))
                 print ("Target: " + str(target))
                 print ("Error: " + str(error))
-
+                
+                # Adjust weights
                 self.neural_network_weights[0] += self.LEARNING_RATE * numpy.dot((first_layer_error * final_output * 1 - final_output), self.neural_network_inputs[0])
                 self.neural_network_weights[1] += self.LEARNING_RATE * numpy.dot((hidden_error * final_output * 1 - final_output), self.neural_network_outputs[1])
                 self.neural_network_weights[2] += self.LEARNING_RATE * numpy.dot((error * final_output * 1 - final_output), self.neural_network_outputs[2])
