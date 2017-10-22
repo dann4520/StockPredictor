@@ -1,5 +1,6 @@
 import numpy
 import csv
+import scipy.special
 
 """
 NeuralNetwork class receives number of inputs, number of hidden layers, and number of outputs
@@ -19,6 +20,8 @@ class NeuralNetwork:
     # modifier to account for input and output layer. Added to hidden_layers to give total number of layers.
     OUTSIDE_LAYERS = 2
     WEIGHTS_FILE = "AAPLWeights.csv"
+    TRAIN_FILE = "Training Data/AAPL.csv"
+    LEARNING_RATE = .25
 
     # initialize neuron with random weights
     def __init__(self, num_inputs, hidden_layers, num_outputs):
@@ -66,7 +69,42 @@ class NeuralNetwork:
 
     # Using training data to train network
     def trainNetwork(self):
-        pass
+        with open(self.TRAIN_FILE, 'rb') as csvfile:
+            reader_object = csv.reader(csvfile, delimiter=',', quotechar='/')
+            for row in reader_object:
+                x = 1
+                for i in range(len(self.neural_network_inputs[0])): # Load inputs into layer 1
+                    self.neural_network_inputs[0][i] = row[x]
+                    x += 1
+                target = row[self.num_inputs + 1]
+
+                for layer in range(self.num_layers):
+
+                    if layer < self.num_layers - 1:
+                        # Get net inputs by matrix multiplication of weight and input matrix
+                        self.neural_network_net_inputs[layer] = numpy.dot(self.neural_network_weights[layer], self.neural_network_inputs[layer])
+                        for val in range(len(self.neural_network_outputs[layer])):
+                            self.neural_network_outputs[layer][val] = self.activationFunction(self.neural_network_net_inputs[layer][val])
+                        self.neural_network_inputs[layer + 1] = self.neural_network_outputs[layer]
+
+                    else:
+                        self.neural_network_net_inputs[layer] = numpy.dot(self.neural_network_weights[layer], self.neural_network_inputs[layer])
+                        for val in range(len(self.neural_network_outputs[layer])):
+                            self.neural_network_outputs[layer][val] = self.activationFunction(self.neural_network_net_inputs[layer][val])
+
+                final_output = self.neural_network_outputs[self.num_layers - 1][0][0]
+                error = float(target) - final_output
+                hidden_error = numpy.dot(self.neural_network_weights[1].T, error)
+                first_layer_error = numpy.dot(self.neural_network_weights[0].T, error)
+                print ("Final Output: " + str(final_output))
+                print ("Target: " + str(target))
+                print ("Error: " + str(error))
+
+                self.neural_network_weights[0] += self.LEARNING_RATE * numpy.dot((first_layer_error * final_output * 1 - final_output), self.neural_network_inputs[0])
+                self.neural_network_weights[1] += self.LEARNING_RATE * numpy.dot((hidden_error * final_output * 1 - final_output), self.neural_network_outputs[1])
+                self.neural_network_weights[2] += self.LEARNING_RATE * numpy.dot((error * final_output * 1 - final_output), self.neural_network_outputs[2])
+
+
 
     # Randomizes the weights
     def randomizeWeights(self):
@@ -130,3 +168,8 @@ class NeuralNetwork:
             print "Output Layer " + str(x)
             print i
             x += 1
+
+    # Pass in net input, returns output using sigmoid function
+    def activationFunction(self, net_input):
+        output = scipy.special.expit(net_input)
+        return output
