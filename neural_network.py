@@ -42,13 +42,11 @@ class NeuralNetwork:
         # This section initializes the weight matrix's for the neural network
         for col in range(self.num_layers):
             if col < self.num_layers - 1:
-                #self.neural_network_weights.append(numpy.random.rand(self.num_inputs, self.num_inputs))
                 self.neural_network_weights.append(numpy.zeros((self.num_inputs, self.num_inputs)))
                 self.neural_network_inputs.append(numpy.zeros((self.num_inputs, 1)))
                 self.neural_network_net_inputs.append(numpy.zeros((self.num_inputs, 1)))
                 self.neural_network_outputs.append(numpy.zeros((self.num_inputs, 1)))
             else:
-                #self.neural_network_weights.append(numpy.random.rand(self.num_outputs, self.num_outputs))
                 self.neural_network_weights.append(numpy.zeros((self.num_outputs, self.num_inputs)))
                 self.neural_network_inputs.append(numpy.zeros((self.num_inputs, 1)))
                 self.neural_network_net_inputs.append(numpy.zeros((1, 1)))
@@ -63,11 +61,6 @@ class NeuralNetwork:
                 x.append(0)
             network_list.append(x)
         return network_list
-
-    # Displays neural network structure
-    def displayNeuralNetwork(self):
-        for i in self.neural_network_list:
-            print i
 
     # Using training data to train network
     def trainNetwork(self):
@@ -112,6 +105,7 @@ class NeuralNetwork:
                 self.neural_network_weights[1] += self.LEARNING_RATE * numpy.dot((hidden_error * self.neural_network_outputs[1] * 1 - self.neural_network_outputs[1]), numpy.transpose(self.neural_network_outputs[0]))
                 self.neural_network_weights[2] += self.LEARNING_RATE * numpy.dot((error * final_output * 1 - final_output), numpy.transpose(self.neural_network_inputs[2]))
 
+    # Tests network using test data
     def queryNetwork(self):
         with open(self.TEST_FILE, 'rb') as csvfile:
             reader_object = csv.reader(csvfile, delimiter=',', quotechar='/')
@@ -148,11 +142,12 @@ class NeuralNetwork:
                 print ("Final Output: " + str(final_output))
                 print ("Target: " + str(target))
                 print ("Error: " + str(error))
+
+                # Sends output to OUTPUT_FILE
                 outputLine = [final_output, target, error]
                 with open(self.OUTPUT_FILE, 'a') as outputCSV:
                     writer_object = csv.writer(outputCSV, delimiter=',', quotechar='/', quoting=csv.QUOTE_MINIMAL)
                     writer_object.writerow(outputLine)
-                    #writer_object.writerow(error)
 
     # Randomizes the weights
     def randomizeWeights(self):
