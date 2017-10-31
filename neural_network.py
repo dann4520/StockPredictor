@@ -21,6 +21,8 @@ class NeuralNetwork:
     OUTSIDE_LAYERS = 2
     WEIGHTS_FILE = "AAPLWeights.csv"
     TRAIN_FILE = "Training Data/AAPL.csv"
+    TEST_FILE = "Test Data/AAPL.csv"
+    OUTPUT_FILE = "Test Data/AAPLResults.csv"
     LEARNING_RATE = .005
 
     # initialize neuron with random weights
@@ -90,8 +92,6 @@ class NeuralNetwork:
                         self.neural_network_inputs[layer + 1] = self.neural_network_outputs[layer]
                     # If final layer
                     else:
-                        #self.neural_network_outputs[layer][0][0] = numpy.sum(self.neural_network_outputs[layer - 1])
-
                         # Get net inputs by matrix multiplication of weight and input matrix
                         self.neural_network_net_inputs[layer] = numpy.dot(self.neural_network_weights[layer], self.neural_network_inputs[layer])
                         # Apply Activation Function to each value in net input to get output
@@ -112,7 +112,47 @@ class NeuralNetwork:
                 self.neural_network_weights[1] += self.LEARNING_RATE * numpy.dot((hidden_error * self.neural_network_outputs[1] * 1 - self.neural_network_outputs[1]), numpy.transpose(self.neural_network_outputs[0]))
                 self.neural_network_weights[2] += self.LEARNING_RATE * numpy.dot((error * final_output * 1 - final_output), numpy.transpose(self.neural_network_inputs[2]))
 
+    def queryNetwork(self):
+        with open(self.TEST_FILE, 'rb') as csvfile:
+            reader_object = csv.reader(csvfile, delimiter=',', quotechar='/')
+            for row in reader_object:
+                x = 1
+                for i in range(len(self.neural_network_inputs[0])): # Load inputs into layer 1
+                    self.neural_network_inputs[0][i] = row[x]
+                    x += 1
+                target = row[self.num_inputs + 1]
 
+                for layer in range(self.num_layers):
+                    # If not final layer
+                    if layer < self.num_layers - 1:
+                        # Get net inputs by matrix multiplication of weight and input matrix
+                        self.neural_network_net_inputs[layer] = numpy.dot(self.neural_network_weights[layer], self.neural_network_inputs[layer])
+                        # Apply Activation Function to each value in net input to get output
+                        for val in range(len(self.neural_network_outputs[layer])):
+                            self.neural_network_outputs[layer][val] = self.activationFunction(self.neural_network_net_inputs[layer][val])
+                        # Pass output of current layer to input of next layer
+                        self.neural_network_inputs[layer + 1] = self.neural_network_outputs[layer]
+                    # If final layer
+                    else:
+                        # Get net inputs by matrix multiplication of weight and input matrix
+                        self.neural_network_net_inputs[layer] = numpy.dot(self.neural_network_weights[layer], self.neural_network_inputs[layer])
+                        # Apply Activation Function to each value in net input to get output
+                        for val in range(len(self.neural_network_outputs[layer])):
+                            self.neural_network_outputs[layer][val] = self.activationFunction(self.neural_network_net_inputs[layer][val])
+
+                # Calculate total error, hidden layer error, and first layer error
+                final_output = self.neural_network_outputs[self.num_layers - 1][0][0]
+                error = float(target) - final_output
+                hidden_error = numpy.dot(self.neural_network_weights[2].T, error)
+                first_layer_error = numpy.dot(self.neural_network_weights[1].T, hidden_error)
+                print ("Final Output: " + str(final_output))
+                print ("Target: " + str(target))
+                print ("Error: " + str(error))
+                outputLine = [final_output, target, error]
+                with open(self.OUTPUT_FILE, 'a') as outputCSV:
+                    writer_object = csv.writer(outputCSV, delimiter=',', quotechar='/', quoting=csv.QUOTE_MINIMAL)
+                    writer_object.writerow(outputLine)
+                    #writer_object.writerow(error)
 
     # Randomizes the weights
     def randomizeWeights(self):
