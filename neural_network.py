@@ -19,10 +19,10 @@ class NeuralNetwork:
 
     # modifier to account for input and output layer. Added to hidden_layers to give total number of layers.
     OUTSIDE_LAYERS = 2
-    WEIGHTS_FILE = "AAPLWeights.csv"
-    TRAIN_FILE = "Training Data/AAPL.csv"
-    TEST_FILE = "Test Data/AAPL.csv"
-    OUTPUT_FILE = "Test Data/AAPLResults.csv"
+    WEIGHTS_FILE = "CVXWeights.csv"
+    TRAIN_FILE = "Training Data/CVX.csv"
+    TEST_FILE = "Test Data/CVX.csv"
+    OUTPUT_FILE = "Test Data/CVXResults.csv"
     LEARNING_RATE = .005
 
     # initialize neuron with random weights
