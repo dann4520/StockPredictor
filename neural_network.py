@@ -19,10 +19,10 @@ class NeuralNetwork:
 
     # modifier to account for input and output layer. Added to hidden_layers to give total number of layers.
     OUTSIDE_LAYERS = 2
-    WEIGHTS_FILE = "GEWeights.csv"
-    TRAIN_FILE = "Training Data/GE.csv"
-    TEST_FILE = "Test Data/GE.csv"
-    OUTPUT_FILE = "Test Data/GEResults.csv"
+    WEIGHTS_FILE = "HDWeights.csv"
+    TRAIN_FILE = "Training Data/HD.csv"
+    TEST_FILE = "Test Data/HD.csv"
+    OUTPUT_FILE = "Test Data/HDResults.csv"
     LEARNING_RATE = .005
 
     # initialize neuron with random weights
