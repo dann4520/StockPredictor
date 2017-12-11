@@ -1,6 +1,7 @@
 import numpy
 import csv
 import scipy.special
+import math
 
 """
 NeuralNetwork class receives number of inputs, number of hidden layers, and number of outputs
@@ -19,10 +20,10 @@ class NeuralNetwork:
 
     # modifier to account for input and output layer. Added to hidden_layers to give total number of layers.
     OUTSIDE_LAYERS = 2
-    WEIGHTS_FILE = "MMMWeights.csv"
-    TRAIN_FILE = "Training Data/MMM.csv"
-    TEST_FILE = "Test Data/MMM.csv"
-    OUTPUT_FILE = "Test Data/MMMResults.csv"
+    WEIGHTS_FILE = "AMZNWeights.csv"
+    TRAIN_FILE = "Training Data/AMZN.csv"
+    TEST_FILE = "Test Data/AMZN.csv"
+    OUTPUT_FILE = "Test Data/AMZNResults.csv"
     LEARNING_RATE = .005
 
     # initialize neuron with random weights
@@ -214,5 +215,6 @@ class NeuralNetwork:
 
     # Pass in net input, returns output using sigmoid function
     def activationFunction(self, net_input):
-        output = scipy.special.expit(net_input)
+        #output = scipy.special.expit(net_input)
+        output = math.erf(net_input)
         return output
